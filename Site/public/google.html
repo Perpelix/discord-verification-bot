@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alt Account Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -12,8 +13,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
             min-height: 100vh;
             padding: 40px 20px;
         }
@@ -26,40 +28,66 @@
         }
 
         .login-card {
-            background: white;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
             border-radius: 20px;
-            padding: 60px 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             max-width: 400px;
         }
 
         .login-card h1 {
             font-size: 28px;
-            margin-bottom: 30px;
-            color: #333;
+            margin-bottom: 10px;
+            color: #fff;
             text-align: center;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            font-size: 14px;
         }
 
         input {
             width: 100%;
-            padding: 15px;
+            padding: 14px 16px;
             margin-bottom: 20px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
+            font-size: 15px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
             border-radius: 10px;
             outline: none;
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .btn {
             width: 100%;
-            padding: 15px 40px;
+            padding: 14px 36px;
             font-size: 16px;
-            font-weight: bold;
-            color: white;
-            background: #667eea;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
         .container {
@@ -69,16 +97,21 @@
 
         .title {
             font-size: 42px;
-            font-weight: bold;
-            color: white;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-align: center;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
         .subtitle {
-            font-size: 18px;
-            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            color: #9ca3af;
             text-align: center;
             margin-bottom: 40px;
         }
@@ -87,82 +120,129 @@
             display: flex;
             gap: 15px;
             margin-bottom: 40px;
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
         }
 
         .search-input {
             flex: 1;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: 2px solid #e0e0e0;
+            padding: 14px 16px;
+            font-size: 15px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
             border-radius: 10px;
             outline: none;
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
         }
 
         .search-button {
-            padding: 15px 40px;
+            padding: 14px 36px;
             font-size: 16px;
-            font-weight: bold;
-            color: white;
-            background: #667eea;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .no-results {
             text-align: center;
-            color: white;
-            font-size: 18px;
-            padding: 40px;
+            color: #9ca3af;
+            font-size: 16px;
+            padding: 60px;
+            background: #1a1a1a;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .result-card {
-            background: white;
-            border-radius: 15px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
             padding: 30px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .main-account {
             margin-bottom: 30px;
             padding-bottom: 30px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid #2a2a2a;
         }
 
         .account-title {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 700;
             margin-bottom: 15px;
-            color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .account-info {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.8;
+            font-size: 15px;
+            color: #e0e0e0;
+            line-height: 2;
         }
 
         .account-info p {
             margin-bottom: 8px;
         }
 
+        .account-info strong {
+            color: #9ca3af;
+            min-width: 120px;
+            display: inline-block;
+        }
+
         .alt-card {
-            background: #f8f9fa;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 15px;
             font-size: 14px;
-            color: #333;
-            line-height: 1.8;
+            color: #e0e0e0;
+            line-height: 2;
+            transition: all 0.3s;
+        }
+
+        .alt-card:hover {
+            border-color: #667eea;
         }
 
         .no-alts {
-            color: #999;
+            color: #9ca3af;
             font-style: italic;
             text-align: center;
             padding: 20px;
@@ -176,29 +256,39 @@
 <body>
     <div id="loginScreen" class="login-container">
         <div class="login-card">
-            <h1>Admin Login</h1>
+            <h1><i class="fas fa-shield-alt"></i> Admin Login</h1>
+            <p class="login-subtitle">Secure access required</p>
             <form id="loginForm">
                 <input type="text" id="username" placeholder="Username" required>
                 <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
             </form>
         </div>
     </div>
 
     <div id="searchScreen" class="hidden">
         <div class="container">
-            <h1 class="title">🔍 Alt Account Search</h1>
-            <p class="subtitle">Search for users and their alt accounts</p>
+            <h1 class="title">
+                <i class="fas fa-search"></i>
+                Alt Account Search
+            </h1>
+            <p class="subtitle">Advanced user investigation and alt account detection</p>
 
             <form class="search-form" id="searchForm">
                 <input
                     type="text"
                     id="query"
                     class="search-input"
-                    placeholder="Enter username or email..."
+                    placeholder="Enter username or email to search..."
                     required
                 >
-                <button type="submit" class="search-button" id="searchBtn">Search</button>
+                <button type="submit" class="search-button" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
             </form>
 
             <div id="results"></div>
@@ -251,7 +341,8 @@
             if (!query) return;
 
             const searchBtn = document.getElementById('searchBtn');
-            searchBtn.textContent = 'Searching...';
+            const originalText = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
             searchBtn.disabled = true;
 
             try {
@@ -274,7 +365,7 @@
             } catch (error) {
                 alert('Search failed: ' + error.message);
             } finally {
-                searchBtn.textContent = 'Search';
+                searchBtn.innerHTML = originalText;
                 searchBtn.disabled = false;
             }
         });
@@ -284,7 +375,12 @@
             container.innerHTML = '';
 
             if (results.length === 0) {
-                container.innerHTML = '<p class="no-results">No results found. Try a different search term.</p>';
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <p>No results found. Try a different search term.</p>
+                    </div>
+                `;
                 return;
             }
 
@@ -294,7 +390,10 @@
 
                 let html = `
                     <div class="main-account">
-                        <h3 class="account-title">Main Account</h3>
+                        <h3 class="account-title">
+                            <i class="fas fa-user"></i>
+                            Main Account
+                        </h3>
                         <div class="account-info">
                             <p><strong>Username:</strong> ${result.main_account.username}#${result.main_account.discriminator}</p>
                             <p><strong>User ID:</strong> ${result.main_account.user_id}</p>
@@ -307,7 +406,10 @@
                 if (result.alt_accounts.length > 0) {
                     html += `
                         <div class="alt-accounts">
-                            <h3 class="account-title">Alt Accounts Found (${result.total_alts})</h3>
+                            <h3 class="account-title">
+                                <i class="fas fa-user-secret"></i>
+                                Alt Accounts Found (${result.total_alts})
+                            </h3>
                     `;
 
                     result.alt_accounts.forEach(alt => {
@@ -323,7 +425,7 @@
 
                     html += `</div>`;
                 } else {
-                    html += '<p class="no-alts">No alt accounts detected for this user.</p>';
+                    html += '<p class="no-alts"><i class="fas fa-check-circle"></i> No alt accounts detected for this user.</p>';
                 }
 
                 card.innerHTML = html;

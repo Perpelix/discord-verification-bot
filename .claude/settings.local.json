@@ -15,7 +15,8 @@
       "Bash(git add GIT_INFO.md)",
       "Bash(git commit -m \"Add Git repository information\")",
       "Bash(git push)",
-      "Bash(git add -A)"
+      "Bash(git add -A)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nConvert site from Next.js to plain HTML/CSS/JS with Express.js\n\nMajor Changes:\n- Replaced Next.js with plain HTML files (all CSS/JS inline)\n- Created Express.js server with API routes\n- Moved Next.js site to Site_NextJS_Backup/\n- All 4 pages now standalone HTML files\n- 7 API route files separated into api/ folder\n- No build process required - just npm start!\n\nNew Structure:\n- public/ - HTML files (index, verify, dashboard, google)\n- api/ - Express.js API routes (7 files)\n- lib/ - MongoDB and utility functions\n- server.js - Main Express server\n- create-admin.js - Admin account creation script\n\nBenefits:\n✅ No build process needed\n✅ All CSS/JS in one file per page\n✅ Easy to customize and understand\n✅ Works on any Node.js host\n✅ Same functionality as Next.js version\n\nDocumentation:\n- Added SITE_CONVERSION.md - Conversion guide\n- Updated Site/README.md - New setup instructions\n- Original Next.js backed up to Site_NextJS_Backup/\n\n🤖 Generated with Claude Code\nhttps://claude.com/claude-code\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

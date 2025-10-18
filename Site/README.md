@@ -1,257 +1,185 @@
-# Verification Bot Website
+# Verification Bot Website - Dark Theme Professional Edition
 
-Plain HTML/CSS/JS website with Express.js API for the Discord verification bot.
+Plain HTML/CSS/JS website with Express.js API - Now with professional dark theme and Font Awesome icons!
 
-## Structure
+## 🎨 New Features
+
+- ✅ **Full Dark Theme** - Professional black (#0a0a0a) background
+- ✅ **Font Awesome Icons** - Modern icon set instead of emojis
+- ✅ **Root Index** - bot.icyfrvst.com directly opens homepage
+- ✅ **Secure Environment** - All credentials via environment variables
+- ✅ **Professional Design** - Gradient accents, smooth animations
+
+## 📦 Structure
 
 ```
 Site/
 ├── server.js              # Express.js server
+├── index.html             # Home page (ROOT - served at /)
 ├── package.json           # Dependencies
-├── .env.example          # Environment variables template
-├── public/               # Static HTML files
-│   ├── index.html        # Home page
+├── create-admin.js        # Admin creation script
+├── .env.example          # Environment template
+├── public/               # Other HTML pages
 │   ├── verify.html       # Verification page
 │   ├── dashboard.html    # Admin dashboard
-│   └── google.html       # User search page
-├── api/                  # API route handlers
-│   ├── verify.js         # User verification
-│   ├── google.js         # User search
-│   ├── stats.js          # Statistics
-│   ├── auth/
-│   │   └── login.js      # Admin login
-│   ├── guilds/
-│   │   ├── list.js       # List guilds
-│   │   └── guildById.js  # Guild details
-│   └── bot/
-│       └── webhook.js    # Bot webhook
-└── lib/                  # Utilities
-    ├── mongodb.js        # Database connection
-    └── utils.js          # Helper functions
+│   └── google.html       # User search
+├── api/                  # 7 API routes
+└── lib/                  # MongoDB & utilities
 ```
 
-## Features
+## 🚀 Quick Start
 
-- **Plain HTML/CSS/JS**: No build process needed
-- **All-in-One Files**: Each HTML file contains its own CSS and JavaScript
-- **Express.js API**: Separate API routes for backend logic
-- **MongoDB Integration**: All data stored in MongoDB
-- **JWT Authentication**: Secure admin authentication
-
-## Setup
-
-1. Install dependencies:
+1. **Install**:
 ```bash
+cd Site
 npm install
 ```
 
-2. Create `.env` file:
+2. **Configure**:
 ```bash
 cp .env.example .env
+# Edit .env with your values
 ```
 
-3. Edit `.env` with your credentials:
-```env
-MONGODB_URL=mongodb://localhost:27017
-JWT_SECRET=random_secret_here
-DISCORD_CLIENT_ID=your_id
-DISCORD_CLIENT_SECRET=your_secret
-DISCORD_BOT_TOKEN=your_token
-API_SECRET_KEY=random_secret
-PORT=3000
-```
-
-4. Run the server:
-```bash
-# Development (with auto-reload)
-npm run dev
-
-# Production
-npm start
-```
-
-5. Open in browser:
-```
-http://localhost:3000
-```
-
-## Pages
-
-- `/` - Home page with features
-- `/verify` - Verification page (auto-redirected from Discord)
-- `/dashboard` - Admin dashboard (requires login)
-- `/google` - Alt account search (requires login)
-
-## API Endpoints
-
-**Public:**
-- `POST /api/verify` - User verification
-
-**Admin (JWT Required):**
-- `POST /api/auth/login` - Admin login
-- `GET /api/stats` - Global statistics
-- `GET /api/guilds/list` - List all guilds
-- `GET /api/guilds/:id` - Guild details
-- `PUT /api/guilds/:id` - Update guild
-- `POST /api/google` - Search users
-
-**Bot (Secret Key Required):**
-- `POST /api/bot/webhook` - Bot webhook
-
-## Deployment
-
-### Deploy to Any Node.js Host
-
-1. **Upload files** to your server
-2. **Install dependencies**: `npm install`
-3. **Set environment variables**
-4. **Start server**: `npm start`
-
-### Use PM2 for Process Management
-
-```bash
-npm install -g pm2
-pm2 start server.js --name verification-site
-pm2 save
-pm2 startup
-```
-
-### Deploy to Heroku
-
-1. Create `Procfile`:
-```
-web: node server.js
-```
-
-2. Deploy:
-```bash
-heroku create
-git push heroku main
-heroku config:set MONGODB_URL=your_url
-heroku config:set JWT_SECRET=your_secret
-# ... set other env vars
-```
-
-### Deploy to Railway
-
-1. Create account at railway.app
-2. New project → Deploy from GitHub
-3. Add environment variables
-4. Deploy!
-
-### Use with Nginx (Reverse Proxy)
-
-```nginx
-server {
-    listen 80;
-    server_name bot.icyfrvst.com;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-## Create Admin Account
-
-Run this script after setting up MongoDB:
-
-```javascript
-// create-admin.js
-const bcrypt = require('bcryptjs');
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
-
-async function createAdmin() {
-  const client = await MongoClient.connect(process.env.MONGODB_URL);
-  const db = client.db('verification_bot');
-
-  const password = await bcrypt.hash('your_password', 10);
-
-  await db.collection('admins').insertOne({
-    username: 'admin',
-    password: password,
-    role: 'admin',
-    created_at: new Date()
-  });
-
-  console.log('Admin created!');
-  await client.close();
-}
-
-createAdmin();
-```
-
-Then run:
+3. **Create Admin**:
 ```bash
 node create-admin.js
 ```
 
-## How It Works
+4. **Run**:
+```bash
+npm start
+```
 
-### Verification Flow
+5. **Open**: http://localhost:3000
 
-1. User clicks verification button in Discord
-2. Redirected to `/verify?guild=XXX&user=YYY`
-3. HTML page loads and JavaScript auto-executes
-4. Calls `POST /api/verify` with user data
-5. Server collects IP, checks for alt accounts
-6. Returns success or error
-7. User sees result and can close window
+## 🌐 Pages
 
-### Authentication Flow
+- `/` - Home page (dark theme, Font Awesome icons)
+- `/verify` - Verification page
+- `/dashboard` - Admin dashboard
+- `/google` - Alt account search
 
-1. User opens `/dashboard` or `/google`
-2. Login form appears if not authenticated
-3. Submit username/password to `POST /api/auth/login`
-4. Server validates credentials with bcrypt
-5. Returns JWT token
-6. Token stored in localStorage
-7. Token sent with all API requests
+All pages feature:
+- Professional dark theme (#0a0a0a background)
+- Font Awesome 6.4.0 icons
+- Smooth animations and transitions
+- Gradient purple/blue accents (#667eea → #764ba2)
 
-### Alt Detection
+## 🔐 Environment Variables (Vercel)
 
-1. On verification, capture user's IP address
-2. Query database for same IP in same guild
-3. If found with different user ID → alt detected
-4. If not found → save data and verify
+Set these in **Vercel Dashboard → Settings → Environment Variables**:
 
-## MongoDB Collections
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `MONGODB_URL` | MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/db` |
+| `JWT_SECRET` | Secret for JWT tokens | Random 32+ char string |
+| `DISCORD_CLIENT_ID` | Discord app client ID | From Discord Developer Portal |
+| `DISCORD_CLIENT_SECRET` | Discord app secret | From Discord Developer Portal |
+| `DISCORD_BOT_TOKEN` | Bot token | From Discord Developer Portal |
+| `API_SECRET_KEY` | Bot-to-site secret | Random 32+ char string |
 
-- `guilds` - Server configs, warns, settings
-- `verifications` - User verification data with IPs
-- `users` - Global user data
-- `alt_accounts` - Detected alt relationships
-- `admins` - Dashboard admin accounts
+**IMPORTANT**: Never commit actual values to Git! Always use environment variables.
 
-## Security
+## 📡 API Endpoints
 
-- ✅ Environment variables for secrets
-- ✅ JWT authentication
-- ✅ bcrypt password hashing
-- ✅ API secret keys
-- ✅ CORS enabled
-- ✅ Input validation
+**Public**:
+- `POST /api/verify` - User verification
 
-## Customization
+**Admin (JWT Required)**:
+- `POST /api/auth/login` - Login
+- `GET /api/stats` - Statistics
+- `GET /api/guilds/list` - All guilds
+- `GET /api/guilds/:id` - Guild details
+- `POST /api/google` - Search users
 
-### Change Styles
+**Bot (Secret Key Required)**:
+- `POST /api/bot/webhook` - Bot webhook
 
-Edit the `<style>` tags in any HTML file in `public/` folder.
+## 🎨 Design System
 
-### Change API Logic
+### Colors
+- **Background**: `#0a0a0a` (Pure black)
+- **Cards**: `#1a1a1a` (Dark gray)
+- **Borders**: `#2a2a2a` (Lighter gray)
+- **Text**: `#e0e0e0` (Light gray)
+- **Accent**: Linear gradient `#667eea` → `#764ba2`
+- **Success**: `#10b981`
+- **Error**: `#ef4444`
 
-Edit the route files in `api/` folder.
+### Typography
+- **Font**: Inter, system fonts
+- **Headings**: 700 weight
+- **Body**: 400 weight
+- **Icons**: Font Awesome 6.4.0
 
-### Add New Pages
+## 🚀 Deployment
 
-1. Create new HTML file in `public/`
+### Vercel (Recommended)
+
+1. **Push to GitHub**:
+```bash
+git add .
+git commit -m "Dark theme update"
+git push
+```
+
+2. **Deploy on Vercel**:
+   - Go to https://vercel.com
+   - Import your GitHub repository
+   - Root Directory: `Site`
+   - Framework: Other
+   - Build Command: (leave empty)
+   - Output Directory: (leave empty)
+
+3. **Add Environment Variables**:
+   - Go to Settings → Environment Variables
+   - Add all variables from `.env.example`
+   - Click "Save"
+
+4. **Deploy**!
+
+### Other Hosts
+
+Works on any Node.js host:
+```bash
+npm install
+npm start
+```
+
+## 📱 Responsive Design
+
+All pages are fully responsive:
+- Desktop: Full layout with sidebar
+- Tablet: Adjusted grid
+- Mobile: Single column, touch-friendly
+
+## 🔧 Customization
+
+### Change Colors
+
+Edit the CSS in any HTML file:
+```css
+/* Background */
+body {
+    background: #0a0a0a; /* Change this */
+}
+
+/* Accent gradient */
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+```
+
+### Change Icons
+
+Replace Font Awesome classes:
+```html
+<i class="fas fa-shield-alt"></i>
+<!-- Change to any FA icon -->
+```
+
+### Add Pages
+
+1. Create `public/newpage.html`
 2. Add route in `server.js`:
 ```javascript
 app.get('/newpage', (req, res) => {
@@ -259,42 +187,50 @@ app.get('/newpage', (req, res) => {
 });
 ```
 
-### Add New API Endpoints
+## 🔒 Security
 
-1. Create new file in `api/`
-2. Import in `server.js`
-3. Add route:
-```javascript
-const newRoute = require('./api/newroute');
-app.use('/api/newroute', newRoute);
-```
+- ✅ All credentials in environment variables
+- ✅ JWT authentication
+- ✅ bcrypt password hashing
+- ✅ CORS enabled
+- ✅ Input validation
+- ✅ No secrets in code
 
-## Troubleshooting
+## 📊 Features
 
-**Server won't start:**
+- Dark professional theme
+- Font Awesome icons
+- Smooth animations
+- Gradient accents
+- Responsive design
+- Fast loading
+- No build process
+- Easy to customize
+
+## 🆘 Troubleshooting
+
+**Server won't start**:
 - Check MongoDB connection
-- Verify .env file exists
-- Check port not in use
+- Verify `.env` file exists
+- Check port 3000 is free
 
-**API errors:**
-- Check MongoDB is running
-- Verify environment variables
-- Check console logs
+**Dark theme not showing**:
+- Clear browser cache
+- Hard refresh (Ctrl+F5)
+- Check CSS loaded
 
-**Login not working:**
-- Create admin account first
-- Check JWT_SECRET is set
-- Verify password is correct
+**Icons not showing**:
+- Check Font Awesome CDN
+- Check internet connection
+- Verify link in `<head>`
 
-## Production Tips
+## 📝 Notes
 
-- Use PM2 for process management
-- Set up Nginx reverse proxy
-- Enable HTTPS with Let's Encrypt
-- Regular MongoDB backups
-- Monitor server logs
-- Set NODE_ENV=production
+- **Root serves index.html**: `bot.icyfrvst.com` → `index.html`
+- **All CSS/JS inline**: Each HTML file is self-contained
+- **Font Awesome CDN**: Loaded from cloudflare
+- **Environment variables**: Never commit `.env` file
 
 ---
 
-For full project documentation, see the root README.md
+For full documentation, see root `README.md`

@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Import API routes
@@ -29,11 +31,12 @@ app.use('/api/guilds/list', guildsListRoute);
 app.use('/api/guilds', guildByIdRoute);
 app.use('/api/bot/webhook', webhookRoute);
 
-// Serve HTML files
+// Serve index.html for root path
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve other HTML files
 app.get('/verify', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'verify.html'));
 });
@@ -48,6 +51,7 @@ app.get('/google', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`API endpoints available at http://localhost:${PORT}/api`);
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
+    console.log(`🌐 Website: http://localhost:${PORT}`);
 });
