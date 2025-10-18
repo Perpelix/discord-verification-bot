@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir Bot Site)",
+      "Bash(dir /b Leader)",
+      "Bash(git init)",
+      "Bash(git config user.name \"Perpelix\")",
+      "Bash(git config user.email \"perpelixofficial@gmail.com\")",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
