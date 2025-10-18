@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Bot - Home</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 60px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            color: #667eea;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 42px; }
+            .subtitle { font-size: 18px; }
+            .logo { font-size: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>Verification Bot</h1>
+        <p class="subtitle">
+            Advanced Discord verification system with alt account detection
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <h3>Secure Verification</h3>
+                <p>IP-based verification system to protect your server</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🚫</div>
+                <h3>Alt Detection</h3>
+                <p>Automatically detect and prevent alt accounts</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">⚠️</div>
+                <h3>Moderation Tools</h3>
+                <p>Comprehensive warn system with auto-ban</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Dashboard</h3>
+                <p>Manage all your servers from one place</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="dashboard.html" class="btn btn-primary">Open Dashboard</a>
+            <a href="google.html" class="btn btn-secondary">Search Users</a>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Verification Bot. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+const { MongoClient } = require('mongodb');
 
 const uri = process.env.MONGODB_URL;
 const options = {};
@@ -10,20 +10,15 @@ if (!process.env.MONGODB_URL) {
   throw new Error('Please add your Mongo URI to .env');
 }
 
-if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    global._mongoClientPromise = client.connect();
-  }
-  clientPromise = global._mongoClientPromise;
-} else {
+if (!global._mongoClientPromise) {
   client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  global._mongoClientPromise = client.connect();
 }
+clientPromise = global._mongoClientPromise;
 
-export default clientPromise;
-
-export async function getDatabase() {
+async function getDatabase() {
   const client = await clientPromise;
   return client.db('verification_bot');
 }
+
+module.exports = { getDatabase, clientPromise };

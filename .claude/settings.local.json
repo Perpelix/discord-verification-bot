@@ -6,7 +6,16 @@
       "Bash(git init)",
       "Bash(git config user.name \"Perpelix\")",
       "Bash(git config user.email \"perpelixofficial@gmail.com\")",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Discord Verification Bot with Alt Detection\n\n- Complete Discord bot with cog-based architecture\n- Moderation system with 3-warn auto-ban\n- Verification system with IP-based alt detection\n- Next.js website with admin dashboard\n- User search and alt account tracking\n- MongoDB integration\n- Full documentation and setup guides\n- Vercel-optimized (7 API routes)\n\n🤖 Generated with Claude Code\nhttps://claude.com/claude-code\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh --version)",
+      "Bash(gh auth status)",
+      "Bash(gh repo create discord-verification-bot --public --source=. --remote=origin --description=\"Discord verification bot with IP-based alt account detection, moderation system, and web dashboard\")",
+      "Bash(git push -u origin master)",
+      "Bash(git add GIT_INFO.md)",
+      "Bash(git commit -m \"Add Git repository information\")",
+      "Bash(git push)",
+      "Bash(git add -A)"
     ],
     "deny": [],
     "ask": []

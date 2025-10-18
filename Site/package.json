@@ -1,25 +1,29 @@
 {
   "name": "verification-bot-site",
   "version": "1.0.0",
-  "description": "Verification bot website with dashboard",
+  "description": "Verification bot website with dashboard - Plain HTML/JS/CSS",
+  "main": "server.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "next": "^14.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
     "mongodb": "^6.3.0",
     "jsonwebtoken": "^9.0.2",
     "bcryptjs": "^2.4.3",
-    "axios": "^1.6.2",
-    "ua-parser-js": "^1.0.37"
+    "ua-parser-js": "^1.0.37",
+    "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.10.5",
-    "@types/react": "^18.2.45",
-    "typescript": "^5.3.3"
-  }
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "discord",
+    "verification",
+    "alt-detection"
+  ],
+  "author": "Perpelix",
+  "license": "MIT"
 }

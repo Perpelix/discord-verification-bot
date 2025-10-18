@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const UAParser = require('ua-parser-js');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
-function getClientInfo(req) {
+export function getClientInfo(req) {
   // Get IP address
   const forwarded = req.headers['x-forwarded-for'];
   const ip = forwarded ? forwarded.split(',')[0] : req.socket.remoteAddress;
@@ -21,7 +20,8 @@ function getClientInfo(req) {
   };
 }
 
-function parseBrowser(userAgent) {
+export function parseBrowser(userAgent) {
+  const UAParser = require('ua-parser-js');
   const parser = new UAParser(userAgent);
   const result = parser.getResult();
 
@@ -33,11 +33,11 @@ function parseBrowser(userAgent) {
   };
 }
 
-function generateToken(payload) {
+export function generateToken(payload) {
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 }
 
-function verifyToken(token) {
+export function verifyToken(token) {
   try {
     return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
@@ -45,26 +45,16 @@ function verifyToken(token) {
   }
 }
 
-async function hashPassword(password) {
+export async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
 }
 
-async function comparePassword(password, hash) {
+export async function comparePassword(password, hash) {
   return await bcrypt.compare(password, hash);
 }
 
-function authenticateRequest(req) {
+export function authenticateRequest(req) {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return null;
   return verifyToken(token);
 }
-
-module.exports = {
-  getClientInfo,
-  parseBrowser,
-  generateToken,
-  verifyToken,
-  hashPassword,
-  comparePassword,
-  authenticateRequest
-};

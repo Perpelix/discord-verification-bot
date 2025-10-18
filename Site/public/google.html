@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alt Account Search</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+        }
+
+        .login-card h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: #667eea;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .search-button {
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: #667eea;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            padding: 40px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .main-account {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .account-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .account-info {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .account-info p {
+            margin-bottom: 8px;
+        }
+
+        .alt-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .no-alts {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <h1>Admin Login</h1>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="searchScreen" class="hidden">
+        <div class="container">
+            <h1 class="title">🔍 Alt Account Search</h1>
+            <p class="subtitle">Search for users and their alt accounts</p>
+
+            <form class="search-form" id="searchForm">
+                <input
+                    type="text"
+                    id="query"
+                    class="search-input"
+                    placeholder="Enter username or email..."
+                    required
+                >
+                <button type="submit" class="search-button" id="searchBtn">Search</button>
+            </form>
+
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let token = localStorage.getItem('token');
+
+        if (token) {
+            showSearchScreen();
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    token = data.token;
+                    localStorage.setItem('token', token);
+                    showSearchScreen();
+                } else {
+                    alert('Login failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Login failed: ' + error.message);
+            }
+        });
+
+        function showSearchScreen() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('searchScreen').classList.remove('hidden');
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const query = document.getElementById('query').value.trim();
+            if (!query) return;
+
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.textContent = 'Searching...';
+            searchBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/google', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data.results);
+                } else {
+                    alert('Search failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Search failed: ' + error.message);
+            } finally {
+                searchBtn.textContent = 'Search';
+                searchBtn.disabled = false;
+            }
+        });
+
+        function displayResults(results) {
+            const container = document.getElementById('results');
+            container.innerHTML = '';
+
+            if (results.length === 0) {
+                container.innerHTML = '<p class="no-results">No results found. Try a different search term.</p>';
+                return;
+            }
+
+            results.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+
+                let html = `
+                    <div class="main-account">
+                        <h3 class="account-title">Main Account</h3>
+                        <div class="account-info">
+                            <p><strong>Username:</strong> ${result.main_account.username}#${result.main_account.discriminator}</p>
+                            <p><strong>User ID:</strong> ${result.main_account.user_id}</p>
+                            <p><strong>IPs Used:</strong> ${result.main_account.ips.join(', ')}</p>
+                            <p><strong>Servers:</strong> ${result.main_account.servers.length}</p>
+                        </div>
+                    </div>
+                `;
+
+                if (result.alt_accounts.length > 0) {
+                    html += `
+                        <div class="alt-accounts">
+                            <h3 class="account-title">Alt Accounts Found (${result.total_alts})</h3>
+                    `;
+
+                    result.alt_accounts.forEach(alt => {
+                        html += `
+                            <div class="alt-card">
+                                <p><strong>Username:</strong> ${alt.username}#${alt.discriminator}</p>
+                                <p><strong>User ID:</strong> ${alt.user_id}</p>
+                                <p><strong>Shared IPs:</strong> ${alt.shared_ips.join(', ')}</p>
+                                <p><strong>Common Servers:</strong> ${alt.servers_in_common.length}</p>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div>`;
+                } else {
+                    html += '<p class="no-alts">No alt accounts detected for this user.</p>';
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
