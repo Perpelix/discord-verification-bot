@@ -21,30 +21,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
-        .card {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            border-radius: 20px;
-            padding: 60px 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        .container {
             text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        p {
-            font-size: 16px;
-            color: #9ca3af;
-            line-height: 1.6;
+            position: relative;
         }
 
         .spinner {
@@ -62,46 +44,127 @@
             100% { transform: rotate(360deg); }
         }
 
-        .icon {
-            font-size: 70px;
-            margin-bottom: 20px;
-            position: relative;
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #9ca3af;
         }
 
-        .success { color: #10b981; }
-        .error { color: #ef4444; }
+        .hidden {
+            display: none;
+        }
 
-        .checkmark-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid #10b981;
-            margin: 0 auto 30px;
+        /* Animated Box */
+        .animated-box {
+            width: 400px;
+            height: 250px;
             position: relative;
-            transform: scale(0);
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            margin: 0 auto;
+        }
+
+        .box-line {
+            position: absolute;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .box-line.top {
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+        }
+
+        .box-line.right {
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 0;
+        }
+
+        .box-line.bottom {
+            bottom: 0;
+            right: 0;
+            height: 3px;
+            width: 0;
+        }
+
+        .box-line.left {
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+        }
+
+        .box-content {
+            opacity: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .box-content h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .box-content p {
+            font-size: 16px;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* Circle Animation */
+        svg {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #2a2a2a;
+            stroke-width: 3;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 377;
+            transform-origin: center;
+            transform: rotate(-90deg);
+        }
+
+        .circle-progress.success {
+            stroke: #10b981;
+        }
+
+        .circle-progress.error {
+            stroke: #ef4444;
         }
 
         .checkmark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 60px;
-            height: 30px;
-            border: 4px solid #10b981;
-            border-top: none;
-            border-right: none;
-            transform: translate(-50%, -65%) rotate(-45deg);
-            opacity: 0;
+            fill: none;
+            stroke: #10b981;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
         }
 
-        .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            pointer-events: none;
+        .error-x {
+            fill: none;
+            stroke: #ef4444;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
         }
 
         .button {
@@ -125,65 +188,50 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #2a2a2a;
-            border-radius: 2px;
-            margin: 30px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            animation: progress 2s ease-in-out;
-        }
-
-        @keyframes progress {
-            0% { width: 0%; }
-            100% { width: 100%; }
+        @media (max-width: 500px) {
+            .animated-box {
+                width: 90vw;
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="container">
         <div id="loading">
             <div class="spinner"></div>
-            <h1>Verifying Your Identity</h1>
-            <p>Please wait while we securely verify your account...</p>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
+            <h1>Verifying Your Identity...</h1>
         </div>
 
-        <div id="success" class="hidden">
-            <div class="checkmark-circle">
-                <div class="checkmark"></div>
-            </div>
-            <h1>Verification Successful!</h1>
-            <p id="successMessage">You are now verified and have full access to the server.</p>
-            <button class="button" onclick="window.close()">
-                <i class="fas fa-times"></i>
-                Close Window
-            </button>
-        </div>
+        <div id="result" class="hidden">
+            <div class="animated-box">
+                <div class="box-line top"></div>
+                <div class="box-line right"></div>
+                <div class="box-line bottom"></div>
+                <div class="box-line left"></div>
 
-        <div id="error" class="hidden">
-            <div class="icon error">
-                <i class="fas fa-exclamation-circle"></i>
+                <div class="box-content">
+                    <svg id="result-icon">
+                        <circle class="circle-bg" cx="60" cy="60" r="54"/>
+                        <circle class="circle-progress" cx="60" cy="60" r="54"/>
+                        <!-- Success checkmark -->
+                        <path class="checkmark" d="M 35 60 L 52 77 L 85 44"/>
+                        <!-- Error X -->
+                        <g class="error-x">
+                            <path d="M 40 40 L 80 80"/>
+                            <path d="M 80 40 L 40 80"/>
+                        </g>
+                    </svg>
+
+                    <h1 id="result-title"></h1>
+                    <p id="result-message"></p>
+
+                    <button class="button" onclick="window.close()">
+                        <i class="fas fa-times"></i>
+                        Close Window
+                    </button>
+                </div>
             </div>
-            <h1>Verification Failed</h1>
-            <p id="errorMessage">An error occurred during verification.</p>
-            <button class="button" onclick="window.close()">
-                <i class="fas fa-times"></i>
-                Close Window
-            </button>
         </div>
     </div>
 
@@ -195,7 +243,7 @@
         async function verifyUser() {
             try {
                 if (!guild || !user) {
-                    showError('Missing required parameters. Please use the verification button in Discord.');
+                    showResult(false, 'Verification Failed', 'Missing required parameters. Please use the verification button in Discord.');
                     return;
                 }
 
@@ -217,140 +265,105 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showSuccess('Verification successful! You now have full access to the server.');
+                    showResult(true, 'Verification Successful!', 'You now have full access to the server.');
+                } else if (data.error === 'VPN or Proxy detected') {
+                    showResult(false, 'VPN/Proxy Detected', 'Please disable your VPN or proxy connection and try again.');
                 } else if (data.error === 'Alt account detected') {
-                    showError('Alt account detected! This IP address is already associated with another account in this server.');
+                    showResult(false, 'Alt Account Detected', 'This IP address is already associated with another account in this server.');
                 } else {
-                    showError(data.error || 'Verification failed. Please contact a server administrator.');
+                    showResult(false, 'Verification Failed', data.message || data.error || 'Please contact a server administrator.');
                 }
             } catch (error) {
                 console.error('Verification error:', error);
-                showError('Verification failed. Please try again or contact a server administrator.');
+                showResult(false, 'Verification Failed', 'An error occurred. Please try again or contact a server administrator.');
             }
         }
 
-        function showSuccess(message) {
+        function showResult(success, title, message) {
+            // Hide loading
             document.getElementById('loading').classList.add('hidden');
-            document.getElementById('error').classList.add('hidden');
-            document.getElementById('successMessage').textContent = message;
-            const successDiv = document.getElementById('success');
-            successDiv.classList.remove('hidden');
+            document.getElementById('result').classList.remove('hidden');
 
-            // GSAP Animation - Clean but AMAZING
-            const circle = document.querySelector('.checkmark-circle');
-            const card = document.querySelector('.card');
+            // Set content
+            document.getElementById('result-title').textContent = title;
+            document.getElementById('result-message').textContent = message;
 
-            // Create particles
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                card.appendChild(particle);
+            // Animate!
+            animateBox(success);
+        }
 
-                const angle = (Math.PI * 2 * i) / 20;
-                const distance = 150;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
+        function animateBox(success) {
+            const tl = gsap.timeline();
+            const lines = {
+                top: document.querySelector('.box-line.top'),
+                right: document.querySelector('.box-line.right'),
+                bottom: document.querySelector('.box-line.bottom'),
+                left: document.querySelector('.box-line.left')
+            };
 
-                gsap.set(particle, {
-                    left: '50%',
-                    top: '30%',
-                    x: 0,
-                    y: 0,
-                    scale: 0
-                });
+            // Line drawing animation - box forms from a point
+            tl.to(lines.top, { width: '100%', duration: 0.4, ease: 'power2.out' })
+              .to(lines.right, { height: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2')
+              .to(lines.bottom, { width: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2')
+              .to(lines.left, { height: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2');
 
-                gsap.to(particle, {
-                    x: x,
-                    y: y,
-                    scale: 1,
-                    opacity: 0,
-                    duration: 1.2,
-                    delay: 0.3,
+            // Circle animation
+            const circleProgress = document.querySelector('.circle-progress');
+            circleProgress.classList.add(success ? 'success' : 'error');
+
+            tl.to(circleProgress, {
+                strokeDashoffset: 0,
+                duration: 0.8,
+                ease: 'power2.inOut'
+            }, '-=0.3');
+
+            // Icon animation (checkmark or X)
+            if (success) {
+                tl.to('.checkmark', {
+                    strokeDashoffset: 0,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                }, '-=0.3');
+            } else {
+                tl.to('.error-x path', {
+                    strokeDashoffset: 0,
+                    duration: 0.4,
                     ease: 'power2.out',
-                    onComplete: () => particle.remove()
-                });
+                    stagger: 0.1
+                }, '-=0.3');
             }
 
-            // Animate circle with elastic bounce
-            gsap.to(circle, {
-                scale: 1,
-                duration: 0.6,
-                ease: 'elastic.out(1, 0.5)',
-                onComplete: () => {
-                    // Animate checkmark draw-in effect
-                    const checkmark = circle.querySelector('.checkmark');
-                    gsap.to(checkmark, {
-                        opacity: 1,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
+            // Typewriter text animation
+            const titleText = document.getElementById('result-title').textContent;
+            const messageText = document.getElementById('result-message').textContent;
 
-                    // Scale checkmark from small to normal
-                    gsap.from(checkmark, {
-                        scale: 0,
-                        duration: 0.4,
-                        ease: 'back.out(2)',
-                        transformOrigin: 'center center'
-                    });
+            document.getElementById('result-title').textContent = '';
+            document.getElementById('result-message').textContent = '';
 
-                    // Pulse effect on circle
-                    gsap.to(circle, {
-                        scale: 1.1,
-                        duration: 0.15,
-                        yoyo: true,
-                        repeat: 1,
-                        ease: 'power1.inOut'
-                    });
+            tl.to('.box-content', { opacity: 1, duration: 0.3 }, '-=0.5');
 
-                    // Glow effect
-                    gsap.to(circle, {
-                        boxShadow: '0 0 30px 10px rgba(16, 185, 129, 0.4)',
-                        duration: 0.5,
-                        yoyo: true,
-                        repeat: 1,
-                        ease: 'power2.inOut'
-                    });
-                }
+            // Typewriter for title
+            const titleChars = titleText.split('');
+            titleChars.forEach((char, i) => {
+                tl.call(() => {
+                    document.getElementById('result-title').textContent += char;
+                }, null, '-=' + (i === 0 ? 0 : 0.04));
             });
 
-            // Animate text
-            gsap.from(successDiv.querySelector('h1'), {
-                y: 20,
-                opacity: 0,
-                duration: 0.5,
-                delay: 0.4,
-                ease: 'power2.out'
+            // Typewriter for message
+            const messageChars = messageText.split('');
+            messageChars.forEach((char, i) => {
+                tl.call(() => {
+                    document.getElementById('result-message').textContent += char;
+                }, null, '-=' + (i === 0 ? 0 : 0.02));
             });
 
-            gsap.from(successDiv.querySelector('p'), {
-                y: 20,
-                opacity: 0,
-                duration: 0.5,
-                delay: 0.5,
-                ease: 'power2.out'
-            });
-
-            gsap.from(successDiv.querySelector('.button'), {
-                y: 20,
-                opacity: 0,
-                duration: 0.5,
-                delay: 0.6,
-                ease: 'power2.out'
-            });
+            // Button fade in
+            tl.from('.button', { opacity: 0, y: 20, duration: 0.4, ease: 'power2.out' }, '-=0.3');
         }
 
-        function showError(message) {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('success').classList.add('hidden');
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('error').classList.remove('hidden');
-        }
-
-        if (guild && user) {
-            verifyUser();
-        } else {
-            showError('Missing required parameters. Please use the verification button in Discord.');
-        }
+        // Start verification
+        verifyUser();
     </script>
 </body>
 </html>

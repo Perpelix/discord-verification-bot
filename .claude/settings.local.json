@@ -22,7 +22,11 @@
       "Bash(git commit -m \"Add Vercel configuration for Express.js deployment\")",
       "Bash(git commit -m \"Convert API routes to Vercel serverless functions\")",
       "Bash(git -C \"E:/Leader\" add -A)",
-      "Bash(git -C \"E:/Leader\" status)"
+      "Bash(git -C \"E:/Leader\" status)",
+      "Bash(git -C \"E:/Leader\" commit -m \"$(cat <<''EOF''\nMove index.html to root + Amazing GSAP animations\n\nMajor Changes:\n- Moved index.html from Site/ to root directory\n- Fixed navigation links to point to Site/public/ files\n- Added GSAP 3.12.5 library to verify.html\n- Created sick GSAP checkmark animation (clean but AMAZING!)\n\nGSAP Animation Features:\n✅ Elastic bounce circle entrance\n✅ 20 particle explosion with gradient colors\n✅ Checkmark draw-in with back.out easing\n✅ Pulse effect on circle\n✅ Glow effect with box-shadow animation\n✅ Staggered text animations (h1, p, button)\n✅ All animations perfectly timed and smooth\n\nVercel Configuration:\n- Created root vercel.json\n- index.html served from root (bot.icyfrvst.com → index.html)\n- All Site files properly routed\n- API routes mapped to Site/api/ files\n\nFile Structure:\n- index.html - Root homepage\n- Site/public/ - HTML pages (verify, dashboard, google)\n- Site/api/ - API serverless functions\n- Bot/ - Discord bot code\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git -C \"E:/Leader\" push)",
+      "Bash(git -C \"E:/Leader\" rm SETUP.md FEATURES.md README.md QUICK_REFERENCE.md PROJECT_SUMMARY.md DEPLOYMENT_CHECKLIST.md GIT_INFO.md SITE_CONVERSION.md FINAL_SUMMARY.md PROJECT_OVERVIEW.txt \"Site/README.md\" \"Bot/README.md\")",
+      "Bash(git -C \"E:/Leader\" commit -m \"$(cat <<''EOF''\nRemove all documentation files + GSAP animations + VPN detection\n\nChanges:\n- Removed all .md and .txt documentation files\n- INSANE GSAP line-drawing box animation on verify page\n- SVG circle + checkmark/X stroke animations\n- Typewriter text effect (character-by-character)\n- VPN/Proxy detection with IP-API.com + IPHub\n- Blocks VPN/Proxy users (>50% confidence)\n- Alt account detection still active\n- Proper error handling for all cases\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
