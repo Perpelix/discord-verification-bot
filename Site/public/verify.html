@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verification - Processing...</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -64,10 +65,44 @@
         .icon {
             font-size: 70px;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .success { color: #10b981; }
         .error { color: #ef4444; }
+
+        .checkmark-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #10b981;
+            margin: 0 auto 30px;
+            position: relative;
+            transform: scale(0);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 30px;
+            border: 4px solid #10b981;
+            border-top: none;
+            border-right: none;
+            transform: translate(-50%, -65%) rotate(-45deg);
+            opacity: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
         .button {
             margin-top: 30px;
@@ -128,8 +163,8 @@
         </div>
 
         <div id="success" class="hidden">
-            <div class="icon success">
-                <i class="fas fa-check-circle"></i>
+            <div class="checkmark-circle">
+                <div class="checkmark"></div>
             </div>
             <h1>Verification Successful!</h1>
             <p id="successMessage">You are now verified and have full access to the server.</p>
@@ -198,7 +233,110 @@
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('error').classList.add('hidden');
             document.getElementById('successMessage').textContent = message;
-            document.getElementById('success').classList.remove('hidden');
+            const successDiv = document.getElementById('success');
+            successDiv.classList.remove('hidden');
+
+            // GSAP Animation - Clean but AMAZING
+            const circle = document.querySelector('.checkmark-circle');
+            const card = document.querySelector('.card');
+
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                card.appendChild(particle);
+
+                const angle = (Math.PI * 2 * i) / 20;
+                const distance = 150;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                gsap.set(particle, {
+                    left: '50%',
+                    top: '30%',
+                    x: 0,
+                    y: 0,
+                    scale: 0
+                });
+
+                gsap.to(particle, {
+                    x: x,
+                    y: y,
+                    scale: 1,
+                    opacity: 0,
+                    duration: 1.2,
+                    delay: 0.3,
+                    ease: 'power2.out',
+                    onComplete: () => particle.remove()
+                });
+            }
+
+            // Animate circle with elastic bounce
+            gsap.to(circle, {
+                scale: 1,
+                duration: 0.6,
+                ease: 'elastic.out(1, 0.5)',
+                onComplete: () => {
+                    // Animate checkmark draw-in effect
+                    const checkmark = circle.querySelector('.checkmark');
+                    gsap.to(checkmark, {
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+
+                    // Scale checkmark from small to normal
+                    gsap.from(checkmark, {
+                        scale: 0,
+                        duration: 0.4,
+                        ease: 'back.out(2)',
+                        transformOrigin: 'center center'
+                    });
+
+                    // Pulse effect on circle
+                    gsap.to(circle, {
+                        scale: 1.1,
+                        duration: 0.15,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: 'power1.inOut'
+                    });
+
+                    // Glow effect
+                    gsap.to(circle, {
+                        boxShadow: '0 0 30px 10px rgba(16, 185, 129, 0.4)',
+                        duration: 0.5,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+
+            // Animate text
+            gsap.from(successDiv.querySelector('h1'), {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.4,
+                ease: 'power2.out'
+            });
+
+            gsap.from(successDiv.querySelector('p'), {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.5,
+                ease: 'power2.out'
+            });
+
+            gsap.from(successDiv.querySelector('.button'), {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.6,
+                ease: 'power2.out'
+            });
         }
 
         function showError(message) {
