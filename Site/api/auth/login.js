@@ -1,5 +1,4 @@
-const { getDatabase } = require('../../lib/mongodb');
-const { comparePassword, generateToken } = require('../../lib/utils');
+const { generateToken } = require('../../lib/utils');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -13,29 +12,30 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Username and password required' });
     }
 
-    const db = await getDatabase();
-    const admin = await db.collection('admins').findOne({ username });
+    // Check against environment variables
+    const adminUser = process.env.ADMIN_USER;
+    const adminPass = process.env.ADMIN_PASS;
 
-    if (!admin) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    if (!adminUser || !adminPass) {
+      return res.status(500).json({ error: 'Admin credentials not configured' });
     }
 
-    const validPassword = await comparePassword(password, admin.password);
-    if (!validPassword) {
+    // Direct comparison (no bcrypt needed for env vars)
+    if (username !== adminUser || password !== adminPass) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const token = generateToken({
-      id: admin._id.toString(),
-      username: admin.username
+      id: 'admin-env',
+      username: adminUser
     });
 
     res.status(200).json({
       success: true,
       token,
       user: {
-        username: admin.username,
-        role: admin.role
+        username: adminUser,
+        role: 'admin'
       }
     });
 

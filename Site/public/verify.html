@@ -27,6 +27,8 @@
         .container {
             text-align: center;
             position: relative;
+            width: 100%;
+            padding: 20px;
         }
 
         .spinner {
@@ -54,17 +56,19 @@
             display: none;
         }
 
-        /* Animated Box */
+        /* Animated Box - BIGGER & PROFESSIONAL */
         .animated-box {
-            width: 400px;
-            height: 250px;
+            width: 600px;
+            height: 400px;
             position: relative;
             margin: 0 auto;
+            background: rgba(26, 26, 26, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .box-line {
             position: absolute;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            z-index: 1;
         }
 
         .box-line.top {
@@ -72,6 +76,7 @@
             left: 0;
             height: 3px;
             width: 0;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
         .box-line.right {
@@ -79,6 +84,7 @@
             right: 0;
             width: 3px;
             height: 0;
+            background: linear-gradient(180deg, #764ba2, #667eea);
         }
 
         .box-line.bottom {
@@ -86,6 +92,7 @@
             right: 0;
             height: 3px;
             width: 0;
+            background: linear-gradient(270deg, #667eea, #764ba2);
         }
 
         .box-line.left {
@@ -93,105 +100,142 @@
             left: 0;
             width: 3px;
             height: 0;
+            background: linear-gradient(0deg, #764ba2, #667eea);
+        }
+
+        .box-line.top.error,
+        .box-line.right.error,
+        .box-line.bottom.error,
+        .box-line.left.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
         }
 
         .box-content {
             opacity: 0;
-            padding: 40px;
+            padding: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         .box-content h1 {
-            font-size: 28px;
-            margin-bottom: 15px;
+            font-size: 36px;
+            margin-bottom: 20px;
             color: #fff;
+            font-weight: 700;
         }
 
         .box-content p {
-            font-size: 16px;
+            font-size: 18px;
             color: #9ca3af;
-            line-height: 1.6;
+            line-height: 1.8;
+            max-width: 450px;
         }
 
-        /* Circle Animation */
+        /* Circle Animation - BIGGER */
         svg {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 20px;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 30px;
         }
 
         .circle-bg {
             fill: none;
             stroke: #2a2a2a;
-            stroke-width: 3;
+            stroke-width: 4;
         }
 
         .circle-progress {
             fill: none;
-            stroke-width: 3;
+            stroke-width: 4;
             stroke-linecap: round;
-            stroke-dasharray: 377;
-            stroke-dashoffset: 377;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
             transform-origin: center;
             transform: rotate(-90deg);
         }
 
         .circle-progress.success {
             stroke: #10b981;
+            filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5));
         }
 
         .circle-progress.error {
             stroke: #ef4444;
+            filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.5));
         }
 
         .checkmark {
             fill: none;
             stroke: #10b981;
-            stroke-width: 3;
+            stroke-width: 5;
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-dasharray: 100;
             stroke-dashoffset: 100;
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8));
         }
 
         .error-x {
             fill: none;
             stroke: #ef4444;
-            stroke-width: 3;
+            stroke-width: 5;
             stroke-linecap: round;
             stroke-dasharray: 100;
             stroke-dashoffset: 100;
+            filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.8));
+        }
+
+        /* Exclamation mark for errors */
+        .error-exclamation {
+            fill: none;
+            stroke: #ef4444;
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.9));
         }
 
         .button {
-            margin-top: 30px;
-            padding: 14px 36px;
-            font-size: 16px;
+            margin-top: 40px;
+            padding: 16px 48px;
+            font-size: 18px;
             font-weight: 600;
             color: #fff;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
+            gap: 12px;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
-        @media (max-width: 500px) {
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 650px) {
             .animated-box {
-                width: 90vw;
-                height: 300px;
+                width: 95vw;
+                height: 450px;
+            }
+            .box-content {
+                padding: 40px 20px;
+            }
+            .box-content h1 {
+                font-size: 28px;
+            }
+            .box-content p {
+                font-size: 16px;
             }
         }
     </style>
@@ -212,14 +256,16 @@
 
                 <div class="box-content">
                     <svg id="result-icon">
-                        <circle class="circle-bg" cx="60" cy="60" r="54"/>
-                        <circle class="circle-progress" cx="60" cy="60" r="54"/>
+                        <circle class="circle-bg" cx="80" cy="80" r="72"/>
+                        <circle class="circle-progress" cx="80" cy="80" r="72"/>
+
                         <!-- Success checkmark -->
-                        <path class="checkmark" d="M 35 60 L 52 77 L 85 44"/>
-                        <!-- Error X -->
-                        <g class="error-x">
-                            <path d="M 40 40 L 80 80"/>
-                            <path d="M 80 40 L 40 80"/>
+                        <path class="checkmark" d="M 45 80 L 70 105 L 115 60"/>
+
+                        <!-- Error exclamation mark (!) -->
+                        <g class="error-exclamation">
+                            <line x1="80" y1="50" x2="80" y2="95"/>
+                            <circle cx="80" cy="110" r="4" fill="#ef4444" stroke="none"/>
                         </g>
                     </svg>
 
@@ -301,11 +347,16 @@
                 left: document.querySelector('.box-line.left')
             };
 
-            // Line drawing animation - box forms from a point
-            tl.to(lines.top, { width: '100%', duration: 0.4, ease: 'power2.out' })
-              .to(lines.right, { height: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2')
-              .to(lines.bottom, { width: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2')
-              .to(lines.left, { height: '100%', duration: 0.4, ease: 'power2.out' }, '-=0.2');
+            // Add error class to lines if failed
+            if (!success) {
+                Object.values(lines).forEach(line => line.classList.add('error'));
+            }
+
+            // Line drawing animation - SMOOTH AS FUCK
+            tl.to(lines.top, { width: '100%', duration: 0.5, ease: 'power2.out' })
+              .to(lines.right, { height: '100%', duration: 0.5, ease: 'power2.out' }, '-=0.3')
+              .to(lines.bottom, { width: '100%', duration: 0.5, ease: 'power2.out' }, '-=0.3')
+              .to(lines.left, { height: '100%', duration: 0.5, ease: 'power2.out' }, '-=0.3');
 
             // Circle animation
             const circleProgress = document.querySelector('.circle-progress');
@@ -313,25 +364,53 @@
 
             tl.to(circleProgress, {
                 strokeDashoffset: 0,
-                duration: 0.8,
+                duration: 1,
                 ease: 'power2.inOut'
-            }, '-=0.3');
+            }, '-=0.4');
 
-            // Icon animation (checkmark or X)
+            // Icon animation
             if (success) {
+                // Checkmark draws in
                 tl.to('.checkmark', {
                     strokeDashoffset: 0,
-                    duration: 0.5,
+                    duration: 0.6,
                     ease: 'power2.out'
-                }, '-=0.3');
+                }, '-=0.4');
             } else {
-                tl.to('.error-x path', {
+                // Exclamation mark SLAMS in with bounce
+                tl.fromTo('.error-exclamation line', {
+                    strokeDashoffset: 100,
+                    scale: 0,
+                    transformOrigin: 'center center'
+                }, {
                     strokeDashoffset: 0,
-                    duration: 0.4,
-                    ease: 'power2.out',
-                    stagger: 0.1
-                }, '-=0.3');
+                    scale: 1,
+                    duration: 0.5,
+                    ease: 'back.out(3)'
+                }, '-=0.4');
+
+                // Dot appears with pop
+                tl.fromTo('.error-exclamation circle', {
+                    scale: 0,
+                    transformOrigin: 'center center'
+                }, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'back.out(4)'
+                }, '-=0.1');
+
+                // Shake animation for extra impact
+                tl.to('svg', {
+                    x: -5,
+                    duration: 0.05,
+                    repeat: 5,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                }, '-=0.2');
             }
+
+            // Fade in box content
+            tl.to('.box-content', { opacity: 1, duration: 0.4 }, '-=0.6');
 
             // Typewriter text animation
             const titleText = document.getElementById('result-title').textContent;
@@ -340,14 +419,12 @@
             document.getElementById('result-title').textContent = '';
             document.getElementById('result-message').textContent = '';
 
-            tl.to('.box-content', { opacity: 1, duration: 0.3 }, '-=0.5');
-
-            // Typewriter for title
+            // Typewriter for title - FASTER
             const titleChars = titleText.split('');
             titleChars.forEach((char, i) => {
                 tl.call(() => {
                     document.getElementById('result-title').textContent += char;
-                }, null, '-=' + (i === 0 ? 0 : 0.04));
+                }, null, i === 0 ? '-=0.3' : '-=0.035');
             });
 
             // Typewriter for message
@@ -355,11 +432,16 @@
             messageChars.forEach((char, i) => {
                 tl.call(() => {
                     document.getElementById('result-message').textContent += char;
-                }, null, '-=' + (i === 0 ? 0 : 0.02));
+                }, null, '-=0.018');
             });
 
-            // Button fade in
-            tl.from('.button', { opacity: 0, y: 20, duration: 0.4, ease: 'power2.out' }, '-=0.3');
+            // Button fade in with bounce
+            tl.from('.button', {
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                ease: 'back.out(2)'
+            }, '-=0.5');
         }
 
         // Start verification
