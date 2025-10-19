@@ -2,18 +2,62 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "server.js"
+      "src": "/",
+      "dest": "/index.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "server.js"
+      "src": "/verify",
+      "dest": "/public/verify.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/public/dashboard.html"
+    },
+    {
+      "src": "/google",
+      "dest": "/public/google.html"
+    },
+    {
+      "src": "/api/verify",
+      "dest": "/api/verify.js"
+    },
+    {
+      "src": "/api/google",
+      "dest": "/api/google.js"
+    },
+    {
+      "src": "/api/stats",
+      "dest": "/api/stats.js"
+    },
+    {
+      "src": "/api/auth/login",
+      "dest": "/api/auth/login.js"
+    },
+    {
+      "src": "/api/guilds/list",
+      "dest": "/api/guilds/list.js"
+    },
+    {
+      "src": "/api/guilds/(.*)",
+      "dest": "/api/guilds/guildById.js"
+    },
+    {
+      "src": "/api/bot/webhook",
+      "dest": "/api/bot/webhook.js"
     }
   ]
 }

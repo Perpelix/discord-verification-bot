@@ -1,9 +1,11 @@
-const express = require('express');
-const router = express.Router();
 const { getDatabase } = require('../lib/mongodb');
 const { authenticateRequest } = require('../lib/utils');
 
-router.get('/', async (req, res) => {
+module.exports = async (req, res) => {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   // Authenticate admin
   const admin = authenticateRequest(req);
   if (!admin) {
@@ -45,6 +47,4 @@ router.get('/', async (req, res) => {
     console.error('Stats error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-});
-
-module.exports = router;
+};
